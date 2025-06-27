@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texas Instruments (TXN) 기업 분석 인포그래픽</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F0F8FF;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#004AAD] mb-2">Texas Instruments (TXN)</h1>
+            <p class="text-xl text-[#387ADF]">배당성장 투자자를 위한 심층 분석 인포그래픽</p>
+        </header>
+
+        <section id="kpis" class="mb-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-5xl font-bold text-[#004AAD]">22년</p>
+                    <p class="mt-2 text-[#387ADF]">연속 배당금 증액</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-5xl font-bold text-[#004AAD]">2.74%</p>
+                    <p class="mt-2 text-[#387ADF]">현재 배당 수익률</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-5xl font-bold text-[#004AAD]">>70%</p>
+                    <p class="mt-2 text-[#387ADF]">산업 및 자동차 매출 비중</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-5xl font-bold text-[#E63946]">99.5%</p>
+                    <p class="mt-2 text-[#E63946]">수익 대비 배당성향 (위험)</p>
+                </div>
+            </div>
+            <p class="text-center mt-6 text-gray-600">안정적인 배당 역사와 성장 산업에 대한 집중은 매력적이나, 높은 배당성향은 주의 깊은 관찰이 필요합니다.</p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <section id="revenue-breakdown" class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-center text-[#004AAD] mb-4">전략적 시장 집중: 안정성의 원천</h2>
+                <div class="chart-container h-[350px] md:h-[400px]">
+                    <canvas id="revenueByMarketChart"></canvas>
+                </div>
+                <p class="mt-4 text-center text-gray-600">매출의 70% 이상이 장기 성장성이 높은 산업 및 자동차 부문에서 발생하여 안정적인 현금 흐름 기반을 제공합니다.</p>
+            </section>
+
+            <section id="financial-trends" class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-center text-[#004AAD] mb-4">주요 재무 추세 (2020-2024)</h2>
+                <div class="chart-container h-[350px] md:h-[400px]">
+                    <canvas id="financialsChart"></canvas>
+                </div>
+                <p class="mt-4 text-center text-gray-600">최근 매출 감소는 반도체 사이클을 반영하며, 대규모 투자는 잉여현금흐름(FCF)에 일시적 압박을 가하고 있습니다.</p>
+            </section>
+
+            <section id="dividend-analysis" class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-center text-[#004AAD] mb-4">배당 성장률 추세: 둔화의 신호</h2>
+                 <div class="chart-container h-[350px] md:h-[400px]">
+                    <canvas id="dividendGrowthChart"></canvas>
+                </div>
+                <p class="mt-4 text-center text-gray-600">역사적으로 높은 배당 성장을 보여줬으나, 최근 성장률이 둔화되고 있습니다. 이는 대규모 투자 주기와 관련이 있습니다.</p>
+            </section>
+
+            <section id="fcf-payout" class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-center text-[#004AAD] mb-4">잉여현금흐름(FCF)과 배당 (2024)</h2>
+                 <div class="chart-container h-[350px] md:h-[400px]">
+                     <canvas id="fcfVsDividendChart"></canvas>
+                </div>
+                <p class="mt-4 text-center text-gray-600">2024년, 지급된 배당금($57억)은 생성된 잉여현금흐름($15억)을 크게 초과했습니다. 이는 투자를 위한 전략적 선택이지만 리스크 요인입니다.</p>
+            </section>
+        </div>
+        
+        <section id="capex-strategy" class="mt-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-6">미래 성장 전략: 300mm 제조 역량 강화</h2>
+            <div class="flex flex-col md:flex-row items-center justify-between text-center space-y-4 md:space-y-0 md:space-x-4">
+                <div class="flex-1">
+                    <p class="text-5xl">🏭</p>
+                    <h3 class="text-xl font-bold text-[#004AAD] mt-2">대규모 투자</h3>
+                    <p class="text-gray-600 mt-1">미국 내 팹 증설에 $600억 이상 투자</p>
+                </div>
+                <div class="text-3xl text-[#387ADF] font-bold self-center transform md:rotate-0 rotate-90">&rarr;</div>
+                <div class="flex-1">
+                    <p class="text-5xl">💡</p>
+                    <h3 class="text-xl font-bold text-[#004AAD] mt-2">경쟁 우위 확보</h3>
+                    <p class="text-gray-600 mt-1">비용 효율성 증대 및 공급망 통제력 강화</p>
+                </div>
+                <div class="text-3xl text-[#387ADF] font-bold self-center transform md:rotate-0 rotate-90">&rarr;</div>
+                <div class="flex-1">
+                    <p class="text-5xl">💰</p>
+                    <h3 class="text-xl font-bold text-[#004AAD] mt-2">장기적 FCF 성장</h3>
+                    <p class="text-gray-600 mt-1">미래의 지속 가능한 배당 재원 확보</p>
+                </div>
+            </div>
+             <p class="mt-6 text-center text-gray-600">현재의 낮은 FCF는 미래의 더 큰 성장을 위한 계획된 투자의 결과입니다.</p>
+        </section>
+
+        <section id="swot-valuation" class="mt-12">
+             <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-6">투자 고려사항: 강점, 약점 및 밸류에이션</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-green-100 p-6 rounded-lg border-l-4 border-green-500">
+                    <h3 class="font-bold text-xl text-green-800 mb-2">강점 & 기회</h3>
+                    <ul class="list-disc list-inside text-green-700 space-y-1">
+                        <li>22년 연속 배당 증액의 강력한 역사</li>
+                        <li>산업/자동차 시장의 장기 성장 수혜</li>
+                        <li>자체 제조를 통한 비용 및 공급망 우위</li>
+                        <li>고객과의 직접적인 관계 강화</li>
+                    </ul>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg border-l-4 border-red-500">
+                    <h3 class="font-bold text-xl text-red-800 mb-2">약점 & 위협</h3>
+                    <ul class="list-disc list-inside text-red-700 space-y-1">
+                        <li>99.5%에 달하는 매우 높은 배당성향</li>
+                        <li>반도체 산업의 주기적 변동성</li>
+                        <li>미중 무역 갈등 등 지정학적 리스크</li>
+                        <li>역사적 평균 대비 높은 현재 주가 밸류에이션</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="investment-thesis" class="mt-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-6">✨ 투자 논리 생성기 ✨</h2>
+            <p class="text-center text-gray-600 mb-4">아래 버튼을 클릭하여 Texas Instruments에 대한 투자 논리를 생성하세요.</p>
+            <div class="flex justify-center mb-6">
+                <button id="generateThesisBtn" class="bg-[#387ADF] hover:bg-[#004AAD] text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                    ✨ 투자 논리 생성하기 ✨
+                </button>
+            </div>
+            <div id="thesisOutput" class="p-4 bg-[#F0F8FF] rounded-lg border border-[#89CFF0] min-h-[100px] text-gray-700 leading-relaxed text-sm md:text-base flex items-center justify-center">
+                <p id="thesisPlaceholder" class="text-gray-500">생성된 투자 논리가 여기에 표시됩니다.</p>
+                <div id="loadingIndicator" class="hidden flex flex-col items-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#004AAD] mb-2"></div>
+                    <p class="text-[#004AAD]">생성 중...</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 pt-8 border-t border-[#89CFF0]">
+            <h2 class="text-2xl font-bold text-[#004AAD]">결론: 투자자를 위한 제언</h2>
+            <p class="mt-4 max-w-3xl mx-auto text-gray-600">
+                텍사스 인스트루먼트는 안정적인 배당을 추구하는 장기 투자자에게 매력적인 선택지입니다. 현재의 높은 배당성향과 밸류에이션은 리스크 요인이지만, 미래 성장을 위한 전략적 투자의 결과로 이해할 수 있습니다. 시장 조정 시 분할 매수 전략과 함께, 회사의 FCF 회복 과정을 꾸준히 모니터링하는 신중한 접근이 권장됩니다.
+            </p>
+        </footer>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const tooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        let label = item.chart.data.labels[item.dataIndex];
+        if (Array.isArray(label)) {
+            return label.join(' ');
+        }
+        return label;
+    };
+
+    const commonChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    color: '#333333',
+                    font: { size: 12 }
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleFont: { size: 14 },
+                bodyFont: { size: 12 },
+                callbacks: {
+                    title: tooltipTitleCallback
+                }
+            }
+        }
+    };
+
+    const brilliantBlues = {
+        deepBlue: '#004AAD',
+        brightBlue: '#387ADF',
+        babyBlue: '#89CFF0',
+        lightSkyBlue: '#C2DFFF',
+        aliceBlue: '#F0F8FF',
+        darkGray: '#333333',
+        dangerRed: '#E63946'
+    };
+
+    new Chart(document.getElementById('revenueByMarketChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['산업 (Industrial)', '자동차 (Automotive)', '개인 전자제품', '기타'],
+            datasets: [{
+                label: '매출 비중',
+                data: [41, 21, 24, 14],
+                backgroundColor: [brilliantBlues.deepBlue, brilliantBlues.brightBlue, brilliantBlues.babyBlue, brilliantBlues.lightSkyBlue],
+                borderColor: brilliantBlues.aliceBlue,
+                borderWidth: 2
+            }]
+        },
+        options: { ...commonChartOptions }
+    });
+
+    new Chart(document.getElementById('financialsChart'), {
+        type: 'bar',
+        data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+                    label: '매출 (십억 $)',
+                    data: [14.46, 18.34, 20.03, 17.52, 15.64],
+                    backgroundColor: brilliantBlues.brightBlue,
+                    yAxisID: 'y',
+                },
+                {
+                    label: '순이익 (십억 $)',
+                    data: [5.60, 7.77, 8.75, 6.51, 4.80],
+                    backgroundColor: brilliantBlues.babyBlue,
+                    yAxisID: 'y',
+                },
+                {
+                    label: '잉여현금흐름(FCF) (십억 $)',
+                    data: [5.49, 6.29, 5.92, 1.35, 1.50],
+                    borderColor: brilliantBlues.deepBlue,
+                    backgroundColor: brilliantBlues.deepBlue,
+                    type: 'line',
+                    yAxisID: 'y',
+                    borderWidth: 3,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            ...commonChartOptions,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '금액 (십억 달러)'
+                    }
+                }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('dividendGrowthChart'), {
+        type: 'line',
+        data: {
+            labels: ['10년 평균', '5년 평균', '3년 평균', '최근 1년'],
+            datasets: [{
+                label: '연간 배당 성장률 (%)',
+                data: [15.31, 9.76, 7.02, 4.72],
+                borderColor: brilliantBlues.deepBlue,
+                backgroundColor: brilliantBlues.brightBlue,
+                fill: false,
+                tension: 0.1,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            ...commonChartOptions,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    title: { display: true, text: '성장률 (%)' }
+                }
+            }
+        }
+    });
+    
+    new Chart(document.getElementById('fcfVsDividendChart'), {
+        type: 'bar',
+        data: {
+            labels: ['2024년 현금 흐름'],
+            datasets: [
+                {
+                    label: '잉여현금흐름(FCF)',
+                    data: [1.5],
+                    backgroundColor: brilliantBlues.brightBlue,
+                },
+                {
+                    label: '지급된 배당금',
+                    data: [5.7],
+                    backgroundColor: brilliantBlues.dangerRed,
+                }
+            ]
+        },
+        options: {
+            ...commonChartOptions,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '금액 (십억 달러)'
+                    }
+                }
+            }
+        }
+    });
+
+    const generateThesisBtn = document.getElementById('generateThesisBtn');
+    const thesisOutput = document.getElementById('thesisOutput');
+    const thesisPlaceholder = document.getElementById('thesisPlaceholder');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+
+    generateThesisBtn.addEventListener('click', async () => {
+        thesisPlaceholder.classList.add('hidden');
+        thesisOutput.innerHTML = ''; // Clear previous content
+        loadingIndicator.classList.remove('hidden');
+
+        const prompt = `텍사스 인스트루먼트(TXN)에 대한 다음 데이터를 바탕으로 배당 성장 투자자를 위한 간결한 투자 논리(150-200 단어)를 작성해 주세요. 투자 유인 요소(배당 역사, 시장 집중)와 우려 사항(배당성향, FCF 감소, 밸류에이션)을 모두 다루고, 투자 접근 방식에 대한 권고 사항으로 마무리해 주세요.
+주요 강점: 22년 연속 배당금 증액, 산업 및 자동차 매출 70% 이상 (장기 성장 시장), 비용 효율성 및 공급망 통제를 위한 자체 제조, 고객과의 직접적인 관계.
+주요 약점/위험: 수익 대비 배당성향 99.5% (매우 높음), 2024년 잉여현금흐름($15억)이 배당금($57억)보다 낮음, 반도체 산업의 주기성, 역사적 평균 대비 높은 현재 주가 밸류에이션.
+최근 재무: 매출은 2022년 $200.3억에서 2024년 $156.4억으로 감소. 대규모 CapEx 투자(300mm 팹에 $600억 이상)로 인해 2023-2024년 FCF가 크게 감소함.
+배당 성장률: 10년 평균 15.31%, 5년 평균 9.76%, 3년 평균 7.02%, 1년 평균 4.72% (둔화 추세).
+전략적 투자: 장기적인 비용 우위와 FCF 성장을 위해 300mm 팹에 상당한 CapEx 투자 중.`;
+
+        try {
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                thesisOutput.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+            } else {
+                thesisOutput.innerHTML = `<p class="text-red-600">투자 논리를 생성하는 데 실패했습니다. 다시 시도해 주세요.</p>`;
+            }
+        } catch (error) {
+            console.error('Error generating thesis:', error);
+            thesisOutput.innerHTML = `<p class="text-red-600">오류 발생: ${error.message}. 네트워크 연결을 확인하거나 나중에 다시 시도해 주세요.</p>`;
+        } finally {
+            loadingIndicator.classList.add('hidden');
+            thesisOutput.classList.remove('flex', 'items-center', 'justify-center'); // Remove centering if content fills
+        }
+    });
+});
+</script>
+</body>
+</html>
+
